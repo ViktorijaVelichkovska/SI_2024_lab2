@@ -7,11 +7,16 @@ Control Flow Graph
 ![si_lab2_slika](https://github.com/ViktorijaVelichkovska/SI_2024_lab2_226036/assets/139005471/febe9bec-0f92-42f9-b0f5-e7870ef5fce7)
 
 
-Прашање 3.
+
+3. Цикломатска комплексност
+
+
 -Почесто користен начин за пресметување на цикломатската сложеност е да се изброи бројот на точки на одлучување (услови) во дадениот код и да се додаде 1. Точките на одлучување вклучуваат if, while, for… и операторите ( &&, ||).
 
 public class SILab2   {
-    public static boolean checkCart(List<Item> allItems, int payment) {
+
+    public static boolean checkCart(List<Item> allItems, int payment)
+    {
         if (allItems == null) {         // Точка на одлучување 1
             throw new RuntimeException("allItems list can't be null!");
         }
@@ -19,7 +24,7 @@ public class SILab2   {
 
         for (int i = 0; i < allItems.size(); i++)  {        // Точка на одлучување 2
             Item item = allItems.get(i);
-            if (item.getName() == null || item.getName().length() == 0) {   // Точка на одлучување          3 
+            if (item.getName() == null || item.getName().length() == 0) {   // Точка на одлучување 3 
                 item.setName("unknown");
             }
             if (item.getBarcode() != null) {           // Точка на одлучување 4
@@ -37,13 +42,15 @@ public class SILab2   {
                     sum += item.getPrice();
                 }
             } 
-else {
+       else {
                 throw new RuntimeException("No barcode!");
             }
-            if (item.getPrice() > 300 && item.getDiscount() > 0 && item.getBarcode().charAt(0) == '0') {  			// Точка на одлучување 8
+            
+            if (item.getPrice() > 300 && item.getDiscount() > 0 && item.getBarcode().charAt(0) == '0') {  	// Точка на одлучување 8
                 sum -= 30;
             }
         }
+        
         if (sum <= payment) {         // Точка на одлучување 9
             return true;
         } else {
@@ -59,10 +66,9 @@ Cyclomatic Complexity  = 9 + 1 = 10
 
 
 
-Прашање 4.
 
+4. Every Branch критериум
 
-Исходите од секој Branch Criterion:
 Test Case 1: 
 Input: allItems = null, payment = 100
 Expected Output: RuntimeException со пораката "allItems list can't be null!"
@@ -116,8 +122,7 @@ Expected Output: false
 
 
 
-
-Прашање 5.
+5. Multiple Condition критериум
 
 
 -Треба да се креират test cases што ќе ги покријат сите можни комбинации од boolean sub-expressions.
@@ -126,26 +131,26 @@ item.getPrice() > 300
 item.getDiscount() > 0
 item.getBarcode().charAt(0) == '0'
 Секој од овие  под-услови може да биде или true или false, што ни дава  2^3 = 8 можни комбинации. Треба сега да ги тестирам сите можни комбинации
-Сите комбинации:
-Test Case 1: item.getPrice() <= 300
+
+Test Case 1: item.getPrice() <= 300, item.getDiscount() <= 0
+Input: allItems = [new Item("item4", "068945", 280, 0.0f)], payment = 280
+Expected Output: true
+Овој тест пример ја препокрива branch каде ниту цената е поголема од 300 ниту попустот е поголем од 0
+
+Test Case 2: item.getPrice() <= 300
 Input: allItems = [new Item("item1", "078945", 300, 0.1f)], payment = 300
 Expected Output: true
 Овој тест пример ја препокрива branch каде цената не е поголема од 300
 
-Test Case 2: item.getPrice() > 300, item.getDiscount() <= 0
+Test Case 3: item.getPrice() > 300, item.getDiscount() <= 0
 Input: allItems = [new Item("item2", "098765", 320, 0.0f)], payment = 320
 Expected Output: true
 Овој тест пример ја препокрива branch во која цената е поголема од 300, но попустот не е поголем од 0
 
-Test Case 3: item.getPrice() > 300, item.getDiscount() > 0, item.getBarcode().charAt(0) != '0'
+Test Case 4: item.getPrice() > 300, item.getDiscount() > 0, item.getBarcode().charAt(0) != '0'
 Input: allItems = [new Item("item3", "178945", 350, 0.15f)], payment = 350
 Expected Output: true
-Овој тест пример ја препокрива branch каде цената е поголема од 300 и попустот е поголем од 0, но баркодот не започнува со цифра 0
-
-Test Case 4: item.getPrice() <= 300, item.getDiscount() <= 0
-Input: allItems = [new Item("item4", "068945", 280, 0.0f)], payment = 280
-Expected Output: true
-Овој тест пример ја препокрива branch каде ниту цената е поголема од 300 ниту попустот е поголем од 0
+Овој тест пример ја препокрива branch каде цената е поголема од 300, попустот е поголем од 0, но баркодот не започнува со цифра 0
 
 Test Case 5: item.getPrice() <= 300, item.getDiscount() > 0
 Input: allItems = [new Item("item5", "078945", 300, 0.2f)], payment = 300
@@ -157,12 +162,13 @@ Input: allItems = [new Item("item6", "178945", 340, 0.0f)], payment = 340
 Expected Output: true
 Овој тест пример ја препокрива branch каде цената е поголема од 300, попустот не е поголем од 0 и баркодот не започнува со цифра 0.
 
-Test Case 7: item.getPrice() > 300, item.getDiscount() > 0, item.getBarcode().charAt(0) == '0'
+Test Case 7: item.getPrice() <= 300, item.getDiscount() > 0, item.getBarcode().charAt(0) != '0'
+Input: allItems = [new Item("item8", "178945", 290, 0.1f)], payment = 290
+Expected Output: true
+Овој тест пример ја препокрива branch каде цената не е поголема од 300, попустот е поголем од 0 и баркдот не започнува со цифрата 0.
+
+Test Case 8: item.getPrice() > 300, item.getDiscount() > 0, item.getBarcode().charAt(0) == '0'
 Input: allItems = [new Item("item7", "098765", 400, 0.25f)], payment = 350
 Expected Output: false
 Овој тест пример ја препокрива branch каде цената е поголема од 300, попустот е поголем од 0 и баркодот започнува со цифра 0. Ова треба да допринесе да се одземе 30 од сумата
 
-Test Case 8: item.getPrice() <= 300, item.getDiscount() > 0, item.getBarcode().charAt(0) != '0'
-Input: allItems = [new Item("item8", "178945", 290, 0.1f)], payment = 290
-Expected Output: true
-Овој тест пример ја препокрива branch каде цената не е поголема од 300, попустот е поголем од 0 и баркдот не започнува со цифрата 0.
