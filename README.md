@@ -2,15 +2,13 @@
 Viktorija Velichkovska 226036
 
 
-Прашање 3.
+Control Flow Graph
 
--За да ја најдеме цикломатската сложеност на даден код, треба да ги разгледаме бројот на точки на одлучување во кодот. Цикломатска сложеност се пресметува по формулата:
-Cyclomatic Complexity = E – N + 2P
-во која:
--	E е бројот на рабовите
--	N е бројот на јазли 
--	P е бројот на поврзани компоненти (обично 1)
-Постои и друг почесто користен начин за пресметување на цикломатската сложеност а тоа е да се брои бројот на точки на одлучување (услови) во дадениот код и да се додаде 1. Точките на одлучување вклучуваат if, while, for… и операторите ( &&, ||).
+![si_lab2_slika](https://github.com/ViktorijaVelichkovska/SI_2024_lab2_226036/assets/139005471/febe9bec-0f92-42f9-b0f5-e7870ef5fce7)
+
+
+Прашање 3.
+-Почесто користен начин за пресметување на цикломатската сложеност е да се изброи бројот на точки на одлучување (услови) во дадениот код и да се додаде 1. Точките на одлучување вклучуваат if, while, for… и операторите ( &&, ||).
 
 public class SILab2   {
     public static boolean checkCart(List<Item> allItems, int payment) {
@@ -21,19 +19,19 @@ public class SILab2   {
 
         for (int i = 0; i < allItems.size(); i++)  {        // Точка на одлучување 2
             Item item = allItems.get(i);
-            if (item.getName() == null || item.getName().length() == 0) {   // Точка на одлучување 3 и 4
+            if (item.getName() == null || item.getName().length() == 0) {   // Точка на одлучување          3 
                 item.setName("unknown");
             }
-            if (item.getBarcode() != null) {           // Точка на одлучување 5
+            if (item.getBarcode() != null) {           // Точка на одлучување 4
                 String allowed = "0123456789";
                 char chars[] = item.getBarcode().toCharArray();
-                for (int j = 0; j < item.getBarcode().length(); j++) {       // Точка на одлучување 6
+                for (int j = 0; j < item.getBarcode().length(); j++) {       // Точка на одлучување 5
                     char c = item.getBarcode().charAt(j);
-                    if (allowed.indexOf(c) == -1) {  		// Точка на одлучување 7
+                    if (allowed.indexOf(c) == -1) {  		// Точка на одлучување 6
                         throw new RuntimeException("Invalid character in item barcode!");
                     }
                 }
-                if (item.getDiscount() > 0) {            // Точка на одлучување 8
+                if (item.getDiscount() > 0) {            // Точка на одлучување 7
                     sum += item.getPrice() * item.getDiscount();
                 } else {
                     sum += item.getPrice();
@@ -42,11 +40,11 @@ public class SILab2   {
 else {
                 throw new RuntimeException("No barcode!");
             }
-            if (item.getPrice() > 300 && item.getDiscount() > 0 && item.getBarcode().charAt(0) == '0') {  			// Точка на одлучување 9, 10, 11
+            if (item.getPrice() > 300 && item.getDiscount() > 0 && item.getBarcode().charAt(0) == '0') {  			// Точка на одлучување 8
                 sum -= 30;
             }
         }
-        if (sum <= payment) {         // Точка на одлучување 12
+        if (sum <= payment) {         // Точка на одлучување 9
             return true;
         } else {
             return false;
@@ -54,8 +52,9 @@ else {
     }
 }
 
-Одговор: Постојат 12 точки на одлучување, што значи:
-Cyclomatic Complexity  = 12 + 1 = 13
+Постојат 9 точки на одлучување, што значи:
+Cyclomatic Complexity  = 9 + 1 = 10
+
 
 
 
