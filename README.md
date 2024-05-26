@@ -3,6 +3,7 @@ Viktorija Velichkovska 226036
 
 
 Прашање 3.
+
 -За да ја најдеме цикломатската сложеност на даден код, треба да ги разгледаме бројот на точки на одлучување во кодот. Цикломатска сложеност се пресметува по формулата:
 Cyclomatic Complexity = E – N + 2P
 во која:
@@ -61,6 +62,7 @@ Cyclomatic Complexity  = 12 + 1 = 13
 
 Прашање 4.
 
+
 Исходите од секој Branch Criterion:
 Test Case 1: 
 Input: allItems = null, payment = 100
@@ -117,6 +119,8 @@ Expected Output: false
 
 
 Прашање 5.
+
+
 -Треба да се креират test cases што ќе ги покријат сите можни комбинации од boolean sub-expressions.
 Условот if (item.getPrice() > 300 && item.getDiscount() > 0 && item.getBarcode().charAt(0) == '0') содржи 3 под-услови:
 item.getPrice() > 300
